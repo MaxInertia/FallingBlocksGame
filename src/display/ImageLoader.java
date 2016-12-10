@@ -16,9 +16,9 @@ import javax.imageio.ImageIO;
  */
 public interface ImageLoader {
 	
-	public final String IMAGE_FOLDER = "C:\\Users\\Doria\\Desktop\\Projects\\ClickQuick\\resources\\";
+	public final String IMAGE_FOLDER = "C:\\Users\\Doria\\Desktop\\Projects\\ClickQuick\\src\\resources\\";
 	public String[] IMAGE_NAMES = { "sunTile.png","moonTile.png","winterTile.png","ironTile.png",
-		"atomicTile.png","bioTile.png","laserTileGIF.gif"};
+		"atomicTile.png","bioTile.png","laserTile.png"};
 	
 	public BufferedImage[] IMAGES = new BufferedImage[7];
 	
