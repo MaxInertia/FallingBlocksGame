@@ -1,0 +1,2 @@
+- Block that does the opposite of what you want
+- Black hole block that sucks in all the blocks around it
