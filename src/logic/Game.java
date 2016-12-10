@@ -17,7 +17,7 @@ public class Game{
 	public static Timer gameTimer;
 
 	public static LinkedList<Cube> cubes;
-	public static boolean[][] isOccupied;
+	//public static boolean[][] isOccupied;
 	public static Cube[][] cells;
 	public static int cubeLength;
 	
@@ -31,7 +31,7 @@ public class Game{
 	protected final double cubeSpawnsPerHundredTicks = 2;
 	
 	public Game(int columns, int rows, int cubeLength){
-		gameTimer = new Timer(50, new GameTick());
+		gameTimer = new Timer(25, new GameTick());
 		cubes = new LinkedList<>();
 		columnCount = columns;
 		rowCount = rows;
@@ -42,10 +42,10 @@ public class Game{
 	
 	public void initializeOccupiedArray(){
 		cells = new Cube[columnCount][rowCount];
-		isOccupied = new boolean[columnCount][rowCount];
+		//isOccupied = new boolean[columnCount][rowCount];
 		for(int row = 0; row<rowCount; row++){
 			for(int column = 0; column<columnCount; column++){
-				isOccupied[column][row] = false;
+				//isOccupied[column][row] = false;
 				cells[column][row] = null;
 			}
 		}
@@ -60,9 +60,9 @@ public class Game{
 		public void actionPerformed(ActionEvent e) {
 			for(int column = 0; column < columnCount; column++){
 				if(Math.random()*100 <= cubeSpawnsPerHundredTicks
-						&& !isOccupied[column][0]) {
+						&& cells[column][0]==null) {
 					Cube newCube = new Cube(column,rowCount,cubeLength);
-					isOccupied[column][0] = true;
+					//isOccupied[column][0] = true;
 					cells[column][0] = newCube;
 					cubes.add(newCube);
 					newCube.setCell(0,column);

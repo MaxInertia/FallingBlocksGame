@@ -14,7 +14,7 @@ public class Cube {
 	public Color color;
 	public int type;
 	
-	private final int DROP_SPEED = 5;
+	private final int DROP_SPEED = 3;
 	public boolean canMove = true;
 	private boolean atBottom = false;
 	//private int ticksLeftStationary;
@@ -28,32 +28,14 @@ public class Cube {
 		this.cubeLength = cubeLength;
 		this.rowCount = rowCount;
 		
-		int rand = ((int)(Math.random()*10)%6)+1;
-		switch(rand){
-			case 1:
-				color = Color.BLUE;
-				type = 0;
-				break;
-			case 2:
-				color = Color.RED;
-				type = 2;
-				break;
-			case 3:
-				color = Color.ORANGE;
-				type = 3;
-				break;
-			case 4:
-				color = Color.GREEN;
-				type = 4;
-				break;
-			case 5:
-				color = Color.PINK;
-				type = 5;
-				break;
-			case 6:
-				color = Color.BLACK;
-				type = 6;
-		}
+		int rand = ((int)(Math.random()*70));
+		if(rand<10){ type = 0; }
+		else if(rand<20){ type = 1; }
+		else if(rand<30){ type = 2; }
+		else if(rand<40){ type = 3; }
+		else if(rand<50){ type = 4; }
+		else if(rand<60){ type = 5; }
+		else if(rand<70){ type = 6; }
 	}
 	
 	public void setCell(int row, int column){
@@ -67,11 +49,11 @@ public class Cube {
 		){
 			return true;
 		}
-		else if( (this.column == otherCube.column)// ) {
+		/*else if( (this.column == otherCube.column)// ) {
 			&& Math.abs(this.row-otherCube.row)<=2){
 			
 			return true;
-		}
+		}*/
 		return false;
 	}
 	
@@ -79,10 +61,10 @@ public class Cube {
 		//canMove = true;
 		//ticksLeftStationary = 10;
 		
-		Game.isOccupied[column][row] = false;
+		//Game.isOccupied[column][row] = false;
 		Game.cells[column][row] = null;
-		Game.isOccupied[column][++row] = true;
-		Game.cells[column][row] = this;
+		//Game.isOccupied[column][++row] = true;
+		Game.cells[column][++row] = this;
 	}
 	
 	public void motionOnGameTick(){
@@ -91,7 +73,8 @@ public class Cube {
 		else if(yPosition<0){ yPosition = yPosition + DROP_SPEED; }
 		
 		else if((yPosition)%cubeLength == 0){
-			if(Game.isOccupied[column][row+1]){
+			//if(Game.isOccupied[column][row+1]){
+			if(Game.cells[column][row+1]!=null){
 				canMove=false;
 			}else{
 				canMove=true;

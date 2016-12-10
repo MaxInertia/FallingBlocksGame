@@ -32,13 +32,38 @@ public interface MouseActions {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			BoardPanel.secondSwapCube = getTileAt(e.getX(),e.getY(),Game.cubeLength);
-			if(!BoardPanel.firstSwapCube.canMove && !BoardPanel.secondSwapCube.canMove
-					&& BoardPanel.firstSwapCube.isNeighborOf(BoardPanel.secondSwapCube)){
-				int temp = BoardPanel.firstSwapCube.type;
-				BoardPanel.firstSwapCube.type = BoardPanel.secondSwapCube.type;
-				BoardPanel.secondSwapCube.type = temp;
+			// If first block exists, and can be moved
+			if(BoardPanel.firstSwapCube!=null && !BoardPanel.firstSwapCube.canMove){
+				// If second block exists, and can be moved
+				if(BoardPanel.secondSwapCube!=null && !BoardPanel.secondSwapCube.canMove){
+					// Check if they are neighbors
+					if(BoardPanel.firstSwapCube.isNeighborOf(BoardPanel.secondSwapCube)){
+						int temp = BoardPanel.firstSwapCube.type;
+						BoardPanel.firstSwapCube.type = BoardPanel.secondSwapCube.type;
+						BoardPanel.secondSwapCube.type = temp;
+					}
+				}
+				// If second position is empty and piece one can move
+				else{
+					if(e.getX() < BoardPanel.firstSwapCube.column*BoardPanel.firstSwapCube.cubeLength) {
+						if(Game.cells[BoardPanel.firstSwapCube.column-1][BoardPanel.firstSwapCube.row] == null){
+							Game.cells[BoardPanel.firstSwapCube.column][BoardPanel.firstSwapCube.row] = null;
+							BoardPanel.firstSwapCube.column--;
+							Game.cells[BoardPanel.firstSwapCube.column][BoardPanel.firstSwapCube.row] = BoardPanel.firstSwapCube;
+						}
+					}else if(e.getX() > (BoardPanel.firstSwapCube.column+1)*BoardPanel.firstSwapCube.cubeLength){
+						if(Game.cells[BoardPanel.firstSwapCube.column+1][BoardPanel.firstSwapCube.row] == null){
+							Game.cells[BoardPanel.firstSwapCube.column][BoardPanel.firstSwapCube.row] = null;
+							BoardPanel.firstSwapCube.column++;
+							Game.cells[BoardPanel.firstSwapCube.column][BoardPanel.firstSwapCube.row] = BoardPanel.firstSwapCube;
+						}
+					}
+				}
 			}
+			BoardPanel.firstSwapCube = null;
+			BoardPanel.secondSwapCube = null;
 		}
+			
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
