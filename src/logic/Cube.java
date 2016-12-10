@@ -61,6 +61,20 @@ public class Cube {
 		//BoardPanel.cells[0][column].cube = this;
 	}
 	
+	public boolean isNeighborOf(Cube otherCube){
+		if( (this.row == otherCube.row)// ) {
+			&& (Math.abs(this.column-otherCube.column)<=2) 
+		){
+			return true;
+		}
+		else if( (this.column == otherCube.column)// ) {
+			&& Math.abs(this.row-otherCube.row)<=2){
+			
+			return true;
+		}
+		return false;
+	}
+	
 	public void moveDownOneCell(){
 		//canMove = true;
 		//ticksLeftStationary = 10;

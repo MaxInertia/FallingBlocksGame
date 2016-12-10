@@ -10,9 +10,6 @@ import logic.Game;
  */
 public interface MouseActions {
 	
-	public Cube firstCube = null;
-	public Cube secondCube = null;
-	
 	public static Cube getTileAt(int x, int y, int cellSize){
 		int column = x/cellSize;
 		int row = y/cellSize;
@@ -35,7 +32,8 @@ public interface MouseActions {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			BoardPanel.secondSwapCube = getTileAt(e.getX(),e.getY(),Game.cubeLength);
-			if(!BoardPanel.firstSwapCube.canMove && !BoardPanel.secondSwapCube.canMove){
+			if(!BoardPanel.firstSwapCube.canMove && !BoardPanel.secondSwapCube.canMove
+					&& BoardPanel.firstSwapCube.isNeighborOf(BoardPanel.secondSwapCube)){
 				int temp = BoardPanel.firstSwapCube.type;
 				BoardPanel.firstSwapCube.type = BoardPanel.secondSwapCube.type;
 				BoardPanel.secondSwapCube.type = temp;

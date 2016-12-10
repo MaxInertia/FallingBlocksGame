@@ -31,7 +31,7 @@ public class Game{
 	protected final double cubeSpawnsPerHundredTicks = 2;
 	
 	public Game(int columns, int rows, int cubeLength){
-		gameTimer = new Timer(50, new GameTick());
+		gameTimer = new Timer(10, new GameTick());
 		cubes = new LinkedList<>();
 		columnCount = columns;
 		rowCount = rows;
