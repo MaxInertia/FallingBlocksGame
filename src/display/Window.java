@@ -27,7 +27,7 @@ public class Window extends JFrame{
 	
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
-		super.setTitle("GenClient - Swing");
+		super.setTitle("Swipe");
 		super.setSize(GRID_WIDTH, GRID_HEIGHT);
 		//super.pack();
 		//super.setResizable(false);

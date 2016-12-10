@@ -6,7 +6,6 @@
 package display;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -16,7 +15,8 @@ import javax.imageio.ImageIO;
  */
 public interface ImageLoader {
 	
-	public final String IMAGE_FOLDER = "C:\\Users\\Doria\\Desktop\\Projects\\ClickQuick\\src\\resources\\";
+	public final String IMAGE_FOLDER = "resources/";
+		//"C:\\Users\\Doria\\Desktop\\Projects\\ClickQuick\\src\\resources\\";
 	public String[] IMAGE_NAMES = { "sunTile.png","moonTile.png","winterTile.png","ironTile.png",
 		"atomicTile.png","bioTile.png","laserTile.png"};
 	
@@ -25,7 +25,9 @@ public interface ImageLoader {
 	public default void loadImages(){
 		try{
 			for(int i=1; i<=7; i++){
-				IMAGES[i-1]= ImageIO.read(new File(IMAGE_FOLDER+IMAGE_NAMES[i-1]));
+				IMAGES[i-1] = ImageIO.read(getClass().getResource(IMAGE_FOLDER+IMAGE_NAMES[i-1]));
+				
+				//IMAGES[i-1]= ImageIO.read(new File(IMAGE_FOLDER+IMAGE_NAMES[i-1]));
 			}
 		} catch(IOException e){
 			e.printStackTrace();
