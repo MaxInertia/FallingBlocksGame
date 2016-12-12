@@ -18,7 +18,7 @@ public class DataPanel extends JPanel{
 	
 	DataPanel(){
 		super();
-		super.add(startButton = new JButton("Start!"));
+		super.add(startButton = new JButton("Start"));
 		startButton.addActionListener(new StartButtonListener());
 		
 		super.add(continuousMotion = new JCheckBox("Continuous Motion"));
@@ -52,8 +52,17 @@ public class DataPanel extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Game.gameTimer.start();
-			startButton.setEnabled(false);
+			if(((AbstractButton)e.getSource()).getText().equals("Start")){
+				Game.startGame();
+				startButton.setText("Pause");
+			}else if(((AbstractButton)e.getSource()).getText().equals("Pause")){
+				Game.gameTimer.stop();
+				startButton.setText("Resume");
+				
+			}else{
+				Game.gameTimer.start();
+				startButton.setText("Pause");
+			}
 		}
 	}
 	
