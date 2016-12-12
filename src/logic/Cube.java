@@ -13,8 +13,7 @@ public class Cube {
 	
 	public Color color;
 	public int type;
-	
-	private final int DROP_SPEED = 5;
+
 	public boolean falling = true;
 	private boolean atBottom = false;
 	//private int ticksLeftStationary;
@@ -109,7 +108,7 @@ public class Cube {
 	public void motionOnGameTick(){
 		if(atBottom){ System.out.println("return"); return; }
 		
-		else if(yPosition<0){ yPosition = yPosition + DROP_SPEED; }
+		else if(yPosition<0){ yPosition = yPosition + Game.DROP_SPEED; }
 		
 		else if((yPosition)%cubeLength == 0){
 			//if(Game.isOccupied[column][row+1]){
@@ -117,11 +116,11 @@ public class Cube {
 				falling=false;
 			}else{
 				falling=true;
-				yPosition = yPosition + DROP_SPEED;
+				yPosition = yPosition + Game.DROP_SPEED;
 				moveDownOneCell();
 			}
 		} else {
-			yPosition = yPosition + DROP_SPEED;
+			yPosition = yPosition + Game.DROP_SPEED;
 		}
 		
 		if(yPosition==(rowCount-1)*cubeLength){

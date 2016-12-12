@@ -21,14 +21,13 @@ public class Game{
 	public static Cube[][] cells;
 	public static int cubeLength;
 	
-	public static LinkedList<Cube> cubesToDelete;
+	protected static LinkedList<Cube> cubesToDelete;
 
 	protected static int columnCount;
 	protected static int rowCount;
 	
-	
-	
-	protected final double cubeSpawnsPerHundredTicks = 2;
+	public static int DROP_SPEED = 5;
+	public static double CUBE_SPAWNS_PER_HUNDRED_TICKS = 2;
 	
 	public Game(int columns, int rows, int cubeLength){
 		gameTimer = new Timer(100, new GameTick());
@@ -59,7 +58,7 @@ public class Game{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			for(int column = 0; column < columnCount; column++){
-				if(Math.random()*100 <= cubeSpawnsPerHundredTicks
+				if(Math.random()*100 <= CUBE_SPAWNS_PER_HUNDRED_TICKS
 						&& cells[column][0]==null) {
 					Cube newCube = new Cube(column,rowCount,cubeLength);
 					//isOccupied[column][0] = true;
