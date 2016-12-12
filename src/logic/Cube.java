@@ -14,8 +14,8 @@ public class Cube {
 	public Color color;
 	public int type;
 	
-	private final int DROP_SPEED = 3;
-	public boolean canMove = true;
+	private final int DROP_SPEED = 5;
+	public boolean falling = true;
 	private boolean atBottom = false;
 	//private int ticksLeftStationary;
 	
@@ -28,7 +28,7 @@ public class Cube {
 		this.cubeLength = cubeLength;
 		this.rowCount = rowCount;
 		
-		int rand = ((int)(Math.random()*70));
+		int rand = ((int)(Math.random()*62));
 		if(rand<10){ type = 0; }
 		else if(rand<20){ type = 1; }
 		else if(rand<30){ type = 2; }
@@ -49,11 +49,50 @@ public class Cube {
 		){
 			return true;
 		}
-		/*else if( (this.column == otherCube.column)// ) {
+		else if( (this.column == otherCube.column)// ) {
 			&& Math.abs(this.row-otherCube.row)<=2){
 			
 			return true;
-		}*/
+		}
+		return false;
+	}
+	
+	public boolean hasSameTypeNeighbors(){
+		System.out.println(rowCount);
+		if(row>0 && (row+1)<Game.rowCount 
+				&& Game.cells[column][row-1]!=null
+				&& Game.cells[column][row+1]!=null){
+			
+			if(type == Game.cells[column][row-1].type
+					&& type == Game.cells[column][row+1].type){
+				
+				if( !this.falling
+						&& !Game.cells[column][row-1].falling
+						&& !Game.cells[column][row+1].falling ){
+				
+					Game.cubesToDelete.add(this);
+					Game.cubesToDelete.add(Game.cells[column][row-1]);
+					Game.cubesToDelete.add(Game.cells[column][row+1]);
+				}
+			}
+		}
+		if(column>0 && (column+1)<Game.columnCount 
+				&& Game.cells[column-1][row]!=null
+				&& Game.cells[column+1][row]!=null){
+			
+			if(type == Game.cells[column-1][row].type
+					&& type == Game.cells[column+1][row].type){
+				
+				if( !this.falling
+						&& !Game.cells[column-1][row].falling
+						&& !Game.cells[column+1][row].falling ){
+					
+					Game.cubesToDelete.add(this);
+					Game.cubesToDelete.add(Game.cells[column-1][row]);
+					Game.cubesToDelete.add(Game.cells[column+1][row]);
+				}
+			}
+		}
 		return false;
 	}
 	
@@ -75,9 +114,9 @@ public class Cube {
 		else if((yPosition)%cubeLength == 0){
 			//if(Game.isOccupied[column][row+1]){
 			if(Game.cells[column][row+1]!=null){
-				canMove=false;
+				falling=false;
 			}else{
-				canMove=true;
+				falling=true;
 				yPosition = yPosition + DROP_SPEED;
 				moveDownOneCell();
 			}
@@ -87,7 +126,7 @@ public class Cube {
 		
 		if(yPosition==(rowCount-1)*cubeLength){
 			atBottom = true;
-			canMove = false;
+			falling = false;
 		}
 	}
 		

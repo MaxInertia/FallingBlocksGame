@@ -23,15 +23,15 @@ public class Game{
 	
 	public static LinkedList<Cube> cubesToDelete;
 
-	protected int columnCount;
-	protected int rowCount;
+	protected static int columnCount;
+	protected static int rowCount;
 	
 	
 	
 	protected final double cubeSpawnsPerHundredTicks = 2;
 	
 	public Game(int columns, int rows, int cubeLength){
-		gameTimer = new Timer(25, new GameTick());
+		gameTimer = new Timer(100, new GameTick());
 		cubes = new LinkedList<>();
 		columnCount = columns;
 		rowCount = rows;
@@ -69,16 +69,23 @@ public class Game{
 					System.out.println("Spawned a cube");
 				}
 			}
+			
+			//checkCancellations();
+			for(Cube aCube: cubes){
+				aCube.hasSameTypeNeighbors();
+			}
+			
 			for(Cube aCube: cubesToDelete){
+				cells[aCube.column][aCube.row] = null;
 				cubes.remove(aCube);
 			}
 			
-			cubesToDelete=null;
 			cubesToDelete = new LinkedList<>();
 			
 			for(Cube aCube: cubes){
 				aCube.motionOnGameTick();
 			}
+			
 			BoardPanel.instance.repaint();
 		}
 	}

@@ -33,9 +33,9 @@ public interface MouseActions {
 		public void mouseReleased(MouseEvent e) {
 			BoardPanel.secondSwapCube = getTileAt(e.getX(),e.getY(),Game.cubeLength);
 			// If first block exists, and can be moved
-			if(BoardPanel.firstSwapCube!=null && !BoardPanel.firstSwapCube.canMove){
+			if(BoardPanel.firstSwapCube!=null && !BoardPanel.firstSwapCube.falling){
 				// If second block exists, and can be moved
-				if(BoardPanel.secondSwapCube!=null && !BoardPanel.secondSwapCube.canMove){
+				if(BoardPanel.secondSwapCube!=null && !BoardPanel.secondSwapCube.falling){
 					// Check if they are neighbors
 					if(BoardPanel.firstSwapCube.isNeighborOf(BoardPanel.secondSwapCube)){
 						int temp = BoardPanel.firstSwapCube.type;
