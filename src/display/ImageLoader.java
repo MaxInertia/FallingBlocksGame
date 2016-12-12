@@ -10,26 +10,30 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- *
- * @author Doria
+ * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
  */
 public interface ImageLoader {
 	
 	public final String IMAGE_FOLDER = "resources/";
-		//"C:\\Users\\Doria\\Desktop\\Projects\\ClickQuick\\src\\resources\\";
+
 	public String[] IMAGE_NAMES = { "sunTile.png","moonTile.png","winterTile.png","ironTile.png",
 		"atomicTile.png","bioTile.png","laserTile.png"};
 	
+	/**
+	 * Images used for the Blocks
+	 */
 	public BufferedImage[] IMAGES = new BufferedImage[7];
 	
+	/**
+	 * Load images from resource folder in the form of BufferedImages
+	 */
 	public default void loadImages(){
 		try{
 			for(int i=1; i<=7; i++){
 				IMAGES[i-1] = ImageIO.read(getClass().getResource(IMAGE_FOLDER+IMAGE_NAMES[i-1]));
-				
-				//IMAGES[i-1]= ImageIO.read(new File(IMAGE_FOLDER+IMAGE_NAMES[i-1]));
 			}
 		} catch(IOException e){
+			System.out.println("[IOException]\tThe relative paths given for the image files is wrong, or some images are missing");
 			e.printStackTrace();
 		}
 	}	

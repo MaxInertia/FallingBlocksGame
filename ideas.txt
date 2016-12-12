@@ -1,2 +1,4 @@
-- Block that does the opposite of what you want
+- Block that does the opposite of what you want (Infected tiles?)
 - Black hole block that sucks in all the blocks around it
+- Iron blocks fall faster than other blocks (other falling blocks they come across don't slow them down)
+- Laser block combos cause laser to take out entire rows of board
