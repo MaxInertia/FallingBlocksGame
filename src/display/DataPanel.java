@@ -22,28 +22,26 @@ public class DataPanel extends JPanel{
 		startButton.addActionListener(new StartButtonListener());
 		
 		super.add(continuousMotion = new JCheckBox("Continuous Motion"));
-		continuousMotion.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(((AbstractButton)e.getSource()).isSelected()){
-					//((AbstractButton)e.getSource()).setSelected(false);
-					//Game.gameTimer.stop();
-					Game.gameTimer.setDelay(250);
-					Game.DROP_SPEED = 25;
-					Game.CUBE_SPAWNS_PER_HUNDRED_TICKS = 5;
-					//Game.gameTimer.start();
-				}else{
-					//((AbstractButton)e.getSource()).setSelected(true);
-					//Game.gameTimer.stop();
-					Game.gameTimer.setDelay(100);
-					Game.DROP_SPEED = 10;
-					Game.CUBE_SPAWNS_PER_HUNDRED_TICKS = 2;
-					//Game.gameTimer.start();
-				}
-				// TODO: Make method to modify drop speed and continuous/discrete mode that modifies all these values accordingly
+		continuousMotion.addActionListener((ActionEvent e) -> {
+			if(((AbstractButton)e.getSource()).isSelected()){
+				//((AbstractButton)e.getSource()).setSelected(false);
+				//Game.gameTimer.stop();
+				Game.gameTimer.setDelay(250);
+				Game.DROP_SPEED = 25;
+				Game.CUBE_SPAWNS_PER_HUNDRED_TICKS = 5;
+				//Game.gameTimer.start();
+			}else{
+				//((AbstractButton)e.getSource()).setSelected(true);
+				//Game.gameTimer.stop();
+				Game.gameTimer.setDelay(100);
+				Game.DROP_SPEED = 10;
+				Game.CUBE_SPAWNS_PER_HUNDRED_TICKS = 2;
+				//Game.gameTimer.start();
 			}
-			
+			// TODO: Make method to modify drop speed and continuous/discrete mode that modifies all these values accordingly
 		});
+		
+		
 	}
 
 	private static class StartButtonListener implements ActionListener {
