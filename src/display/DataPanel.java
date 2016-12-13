@@ -18,10 +18,12 @@ public class DataPanel extends JPanel{
 		
 		super.add(startButton = new JButton("Start"));
 		startButton.addActionListener(new StartButtonListener());
+		startButton.setFocusable(false);
 		
 		super.add(resetButton = new JButton("Reset"));
 		resetButton.addActionListener(new ResetButtonListener());
 		resetButton.setEnabled(false);
+		resetButton.setFocusable(false);
 	}
 
 }

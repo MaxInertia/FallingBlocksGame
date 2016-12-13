@@ -17,19 +17,19 @@ public interface ImageLoader {
 	public final String IMAGE_FOLDER = "resources/";
 
 	public String[] IMAGE_NAMES = { "sunTile.png","moonTile.png","winterTile.png","ironTile.png",
-		"atomicTile.png","bioTile.png","laserTile.png"};
+		"atomicTile.png","bioTile.png","laserTile.png","selected3.png"};
 	
 	/**
 	 * Images used for the Blocks
 	 */
-	public BufferedImage[] IMAGES = new BufferedImage[7];
+	public BufferedImage[] IMAGES = new BufferedImage[8];
 	
 	/**
 	 * Load images from resource folder in the form of BufferedImages
 	 */
 	public default void loadImages(){
 		try{
-			for(int i=1; i<=7; i++){
+			for(int i=1; i<=8; i++){
 				IMAGES[i-1] = ImageIO.read(getClass().getResource(IMAGE_FOLDER+IMAGE_NAMES[i-1]));
 			}
 		} catch(IOException e){

@@ -1,5 +1,6 @@
 package display;
 
+import display.interactions.KeyPressListener;
 import display.interactions.MouseActions;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -26,7 +27,10 @@ public final class BoardPanel extends JPanel implements MouseActions, ImageLoade
 		this.loadImages();
 		
 		super.setOpaque(true);
+		super.setFocusable(true);
+		System.out.println(super.isFocusOwner());
 		super.addMouseListener(new MousePressListener());
+		super.addKeyListener(new KeyPressListener());
 		System.out.println("GamePanel... "+this.getSize().width+","+this.getSize().height);
 	}
 	
@@ -49,6 +53,16 @@ public final class BoardPanel extends JPanel implements MouseActions, ImageLoade
 					Game.blockLength, 
 					this);
 		});
+		if(Game.isStationaryBlock){
+			g.drawImage(IMAGES[7],
+					Game.selectedCol*Game.blockLength,
+					Game.selectedRow*Game.blockLength,
+					//0,
+					//0,
+					Game.blockLength,
+					Game.blockLength,
+					this);
+		}
 	}
 	
 	/**

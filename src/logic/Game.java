@@ -22,6 +22,12 @@ public final class Game extends timerEvents{
 	public static int blockLength;
 	public static int DROP_SPEED = 3;
 	
+	// Selected block
+	public static boolean isStationaryBlock = false;
+	public static int selectedCol = 0;
+	public static int selectedRow = 0;
+	public static boolean blockSelected = false;
+	
 	public Game(int columns, int rows, int blockLength){
 		gameTimer = new Timer(15, new GameTick());
 		isPaused = true;

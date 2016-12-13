@@ -93,7 +93,7 @@ public class Block {
 	 * If block is the center of a line-up of three same-type blocks,
 	 * this block and those two neighbors are added to the blocksToDelete list.
 	 */
-	public void hasSameTypeNeighbors(){
+	public boolean hasSameTypeNeighbors(){
 		//System.out.println(Game.myRowCount);
 		if(myRow>0 && (myRow+1)<Game.rowCount 
 				&& Game.cells[myColumn][myRow-1]!=null
@@ -109,6 +109,7 @@ public class Block {
 					Game.blocksToDelete.add(this);
 					Game.blocksToDelete.add(Game.cells[myColumn][myRow-1]);
 					Game.blocksToDelete.add(Game.cells[myColumn][myRow+1]);
+					return true;
 				}
 			}
 		}
@@ -126,9 +127,11 @@ public class Block {
 					Game.blocksToDelete.add(this);
 					Game.blocksToDelete.add(Game.cells[myColumn-1][myRow]);
 					Game.blocksToDelete.add(Game.cells[myColumn+1][myRow]);
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 	
 	/**
