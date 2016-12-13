@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Personal">
-            <file>file:/C:/Users/Doria/Desktop/Projects/ClickQuick/src/display/BoardPanel.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/ClickQuick/src/clickquick/ClickQuick.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/ClickQuick/src/logic/Cube.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/ClickQuick/src/logic/Game.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/ClickQuick/src/display/Window.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/main/Swipe.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/display/interactions/KeyPressListener.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/display/interactions/MouseActions.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/display/BoardPanel.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/display/DataPanel.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/logic/Block.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/logic/Game.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe_reorganize/src/display/ImageLoader.java</file>
         </group>
     </open-files>
 </project-private>
