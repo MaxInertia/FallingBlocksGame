@@ -50,7 +50,7 @@ public interface MouseActions {
 			if(e.getButton()!=BUTTON1){ return; }
 		
 			BoardPanel.secondSwapBlock = getTileAt(e.getX(),e.getY(),Game.blockLength);
-			if(BoardPanel.secondSwapBlock==null){ return; }
+			//if(BoardPanel.secondSwapBlock==null){ return; }
 			
 			// If first block exists, and can be moved
 			if(BoardPanel.firstSwapBlock!=null && !BoardPanel.firstSwapBlock.isFalling()){ // Since we check if the block is falling on release, blocks can be selected while falling, and swapped as soon as they stop falling.  (potentially unwanted behavior)
@@ -70,10 +70,10 @@ public interface MouseActions {
 					// second position is to the left of firstSwapBlock
 					if(e.getX() < BoardPanel.firstSwapBlock.myColumn*Game.blockLength) {
 						if(Game.cells[BoardPanel.firstSwapBlock.myColumn-1][BoardPanel.firstSwapBlock.myRow] == null){
-							
+					
 							// Check if block is on the floor (can still fall)
 							if(BoardPanel.firstSwapBlock.myRow < Swipe.ROWS-1){
-								
+
 								// We need to check to see if a falling block is overlapping the position it will move to
 								Block blockInLowerCell = Game.cells[BoardPanel.firstSwapBlock.myColumn-1][BoardPanel.firstSwapBlock.myRow+1];
 								if( blockInLowerCell==null || blockInLowerCell.yPosition==0 ){
