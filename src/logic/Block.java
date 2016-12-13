@@ -157,21 +157,58 @@ public class Block {
 	/**
 	 * Shifts the Block one cell to the right
 	 * (Can throw IndexOutOfBoundsException)
+	 * @return 
 	 */
-	public void moveRightOneCell(){
-		yPosition = Game.blockLength;
-		Game.cells[myColumn][myRow] = null;
-		Game.cells[++myColumn][myRow] = this;
+	public boolean moveRightOneCell(){
+		if(myColumn == Game.columnCount - 1 ) return false;
+
+		int prevCol = myColumn;
+		Block temp = Game.cells[prevCol + 1][myRow];
+				
+		if(temp != null){
+			if(temp.isFalling()) return false;
+			
+			Game.cells[prevCol + 1][myRow] = Game.cells[prevCol][myRow];
+			Game.cells[prevCol][myRow] = temp;
+			Game.cells[prevCol][myRow].myColumn--;
+			
+		}else{
+			Game.cells[prevCol][myRow] = null;
+			Game.cells[prevCol + 1][myRow] = this;
+			
+		}
+		myColumn++;
+		
+		//yPosition = Game.blockLength;
+		return true;
 	}
 	
 	/**
 	 * Shifts the Block one cell to the left
 	 * (Can throw IndexOutOfBoundsException)
 	 */
-	public void moveLeftOneCell(){
-		yPosition = Game.blockLength;
-		Game.cells[myColumn][myRow] = null;
-		Game.cells[--myColumn][++myRow] = this;
+	public boolean moveLeftOneCell(){
+		if(myColumn == 0 ) return false;
+		
+		int prevCol = myColumn;
+		Block temp = Game.cells[prevCol - 1][myRow];
+		
+		if(temp != null){
+			if (temp.isFalling()) return false;
+			
+			Game.cells[prevCol - 1][myRow] = Game.cells[prevCol][myRow];
+			Game.cells[prevCol][myRow] = temp;
+			Game.cells[prevCol][myRow].myColumn++;
+		
+		}else{
+			Game.cells[prevCol][myRow] = null;
+			Game.cells[prevCol - 1][myRow] = this;
+			
+		}
+		myColumn--;
+		//yPosition = Game.blockLength;
+		
+		return true;
 	}
 	
 	/**

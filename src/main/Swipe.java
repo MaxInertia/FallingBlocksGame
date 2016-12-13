@@ -16,8 +16,8 @@ import logic.Game;
  */
 public class Swipe {
 
-	private static final int COLUMNS = 6;
-	public static final int ROWS = 8;
+	private static final int COLUMNS = 8;
+	public static final int ROWS = 10;
 	private static final int CUBE_SIDE_LENGTH = 60;
 	
 	/**
