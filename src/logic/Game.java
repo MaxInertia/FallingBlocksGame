@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
  */
-public final class Game extends timerEvents{
+public final class Game extends TimerEvents{
 
 	public static LinkedList<Block> blocks; //TODO: Replace blocks with cells
 	public static Block[][] cells;

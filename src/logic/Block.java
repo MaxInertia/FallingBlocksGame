@@ -1,5 +1,7 @@
 package logic;
 
+import main.MainController;
+
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
  */
@@ -178,6 +180,7 @@ public class Block {
 			Game.cells[prevCol + 1][myRow] = this;
 			
 		}
+		MainController.updateSwapsLabel(++Statistics.blockSwapCount);
 		myColumn++;
 		
 		//yPosition = Game.blockLength;
@@ -206,6 +209,7 @@ public class Block {
 			Game.cells[prevCol - 1][myRow] = this;
 			
 		}
+		MainController.updateSwapsLabel(++Statistics.blockSwapCount);
 		myColumn--;
 		//yPosition = Game.blockLength;
 		
