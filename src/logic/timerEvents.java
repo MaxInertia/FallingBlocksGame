@@ -5,21 +5,36 @@
  */
 package logic;
 
-import display.BoardPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.util.LinkedList;
-import javax.swing.Timer;
-//import static logic.Game.blocks;
-//import static logic.Game.blocksToDelete;
-//import static logic.Game.setRunning;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import utilities.CanvasPainter;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
  */
 public abstract class timerEvents {
-	public static Timer gameTimer;
+	
+	private static Timeline gameFrameTimeline;
+	
+	//public static Timer gameTimer;
 	public static boolean isPaused;
+	
+	
+	private static void initializeTimeline(){
+		gameFrameTimeline = new Timeline(
+			new KeyFrame(
+			  Duration.ZERO,
+			  actionEvent -> gameTick()
+			),
+			new KeyFrame(
+			  Duration.millis(15)
+			)
+		);
+		gameFrameTimeline.setCycleCount(Timeline.INDEFINITE);
+	}
 	
 	/**
 	 * Used to pause or resume the game. set runstate to false to pause and true to resume the game.
@@ -30,10 +45,13 @@ public abstract class timerEvents {
 	 */
 	public static void setRunning(boolean tof){
 		if(tof){
-			Game.gameTimer.start();
+			if(gameFrameTimeline==null){
+				initializeTimeline();
+			}
+			gameFrameTimeline.play();
 			isPaused = false;
 		}else{
-			Game.gameTimer.stop();
+			gameFrameTimeline.pause();
 			isPaused = true;
 		}
 	}
@@ -56,37 +74,36 @@ public abstract class timerEvents {
 		Game.initializeCells();
 	}
 	
-	class GameTick implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Game.createFallingBlocks();
-			
-			if(Game.cells[Game.selectedCol][Game.selectedRow]==null){
-				Game.isStationaryBlock = false;
-			}
-			
-			Game.blocks.stream().forEach((aCube) -> {
-				if(!aCube.hasSameTypeNeighbors() && !Game.isStationaryBlock){
-					Game.isStationaryBlock = true;
-					Game.selectedCol = aCube.myColumn;
-					Game.selectedRow = aCube.myRow;
-				}
-			});
-			
-			Game.blocksToDelete.stream().map((aCube) -> {
-				Game.cells[aCube.myColumn][aCube.myRow] = null;
-				return aCube;
-			}).forEach((aCube) -> {
-				Game.blocks.remove(aCube);
-			});
-			
-			Game.blocksToDelete = new LinkedList<>();
-			
-			Game.blocks.stream().forEach((aCube) -> {
-				aCube.motionOnGameTick();
-			});
-			
-			BoardPanel.instance.repaint();
+
+	private static void gameTick() {
+		//System.out.println("[Game]\ttimer clicked");
+		Game.createFallingBlocks();
+
+		if(Game.cells[Game.selectedCol][Game.selectedRow]==null){
+			Game.isStationaryBlock = false;
 		}
+
+		Game.blocks.stream().forEach((aCube) -> {
+			if(!aCube.hasSameTypeNeighbors() && !Game.isStationaryBlock){
+				Game.isStationaryBlock = true;
+				Game.selectedCol = aCube.myColumn;
+				Game.selectedRow = aCube.myRow;
+			}
+		});
+
+		Game.blocksToDelete.stream().map((aCube) -> {
+			Game.cells[aCube.myColumn][aCube.myRow] = null;
+			return aCube;
+		}).forEach((aCube) -> {
+			Game.blocks.remove(aCube);
+		});
+
+		Game.blocksToDelete = new LinkedList<>();
+
+		Game.blocks.stream().forEach((aCube) -> {
+			aCube.motionOnGameTick();
+		});
+
+		CanvasPainter.repaint();
 	}
 }

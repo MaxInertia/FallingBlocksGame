@@ -32,6 +32,7 @@ public class Block {
 		
 		if(myRow==0){
 			yPosition = Game.blockLength;
+			falling = true;
 		}else{
 			yPosition = 0;
 		}

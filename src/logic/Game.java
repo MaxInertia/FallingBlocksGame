@@ -1,7 +1,6 @@
 package logic;
 
 import java.util.LinkedList;
-import javax.swing.Timer;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -23,13 +22,16 @@ public final class Game extends timerEvents{
 	public static int DROP_SPEED = 3;
 	
 	// Selected block
-	public static boolean isStationaryBlock = false;
+	public static Block firstSwapBlock;
+	public static Block secondSwapBlock;
 	public static int selectedCol = 0;
 	public static int selectedRow = 0;
 	public static boolean blockSelected = false;
+	public static boolean isStationaryBlock = false;
 	
 	public Game(int columns, int rows, int blockLength){
-		gameTimer = new Timer(15, new GameTick());
+		System.out.println("[Game] Constructor called.");
+		//gameTimer = new Timer(15, new GameTick());
 		isPaused = true;
 		
 		columnCount = columns;
@@ -58,6 +60,7 @@ public final class Game extends timerEvents{
 	 * Starts the game clock, initializes starting blocks, and activates mouse listener
 	 */
 	public static void startGame(){
+		System.out.println("[Game]\tstartGame() called.");
 		setRunning(true);
 		for(int currentRow = rowCount-2; currentRow<rowCount; currentRow++){
 			for(int currentColumn = 0; currentColumn<columnCount; currentColumn++){
@@ -73,9 +76,12 @@ public final class Game extends timerEvents{
 	 */
 	public static void createFallingBlocks(){
 		for(int column = 0; column < columnCount; column++){
-			if(Math.random()*1000 <= SPAWNS_PER_HUNDRED_TICKS
-					&& cells[column][0]==null) {
-				new Block(column,0);
+			if(Math.random()*1000 <= SPAWNS_PER_HUNDRED_TICKS) {
+				if(cells[column][0]==null) {
+					new Block(column,0);
+				}else if(!cells[column][0].isFalling()){
+					setRunning(false);
+				}
 			}
 		}
 	}
