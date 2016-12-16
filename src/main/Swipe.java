@@ -19,9 +19,9 @@ public class Swipe extends Application implements SoundLoader{
 	public static Stage primaryStage;
 	public static MediaPlayer mediaPlayer;
 	
-	public static final int COLUMNS = 8;
-	public static final int ROWS = 10;
-	public static final int CUBE_SIDE_LENGTH = 60;
+	public static final int COLUMNS = 10;
+	public static final int ROWS = 14;
+	public static final int CUBE_SIDE_LENGTH = 40;
 	
 	/**
 	 * @param args the command line arguments

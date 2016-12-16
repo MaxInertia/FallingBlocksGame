@@ -6,10 +6,11 @@
 package logic;
 
 
-import java.util.LinkedList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import static logic.Block.yGround;
+import static logic.Game.columnCount;
 import main.MainController;
 import utilities.CanvasPainter;
 
@@ -35,7 +36,7 @@ public abstract class TimerEvents {
 			  actionEvent -> gameTick()
 			),
 			new KeyFrame(
-			  Duration.millis(15)
+			  Duration.millis(25)
 			)
 		);
 		gameFrameTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -106,42 +107,48 @@ public abstract class TimerEvents {
 	 */
 	public static void reset(){
 		setRunning(false);
-		Game.blocks = new LinkedList<>();
-		Game.blocksToDelete = new LinkedList<>();
-		Game.initializeCells();
+		//Game.blocks = new LinkedList<>();
+		//Game.blocksToDelete = new LinkedList<>();
+		Game.initializeBlockSpaces();
+	}
+	
+	private static void createBottomRow(){
+		for(int currentColumn = 0; currentColumn<columnCount; currentColumn++){
+			new Block(currentColumn, Game.rowCount);
+		}
 	}
 	
 
 	private static void gameTick() {
 		//System.out.println("[Game]\ttimer clicked");
 		Game.createFallingBlocks();
-
-		if(Game.cells[Game.selectedCol][Game.selectedRow]==null){
-			Game.isStationaryBlock = false;
+		Game.currentPeriod++;
+		
+		if(Game.currentPeriod>=Game.PERIOD_OF_RAISE){
+			yGround+=1;
+			Game.currentPeriod = 0;
 		}
 
-		Game.blocks.stream().forEach((aCube) -> {
-			if(!aCube.hasSameTypeNeighbors() && !Game.isStationaryBlock){
-				Game.isStationaryBlock = true;
-				Game.selectedCol = aCube.myColumn;
-				Game.selectedRow = aCube.myRow;
+		// Goes to r<Game.rowCount+1 because the lower layer must move up too
+		for(int c=0; c<Game.columnCount; c++){
+			for(int r=0; r<Game.rowCount+1; r++){
+				Block b = Game.blocks[c][r];
+				if(b!=null){
+					b.motionOnGameTick();
+					if(b.myRow != Game.rowCount){
+						b.performCancellations();
+					}
+				}
 			}
-		});
-
-		Game.blocksToDelete.stream().map((aCube) -> {
-			Game.cells[aCube.myColumn][aCube.myRow] = null;
-			Statistics.blocksClearedCount++;
-			return aCube;
-		}).forEach((aCube) -> {
-			Game.blocks.remove(aCube);
-		});
-		MainController.updateDestroyedLabel(Statistics.blocksClearedCount);
+		}
 		
-		Game.blocksToDelete = new LinkedList<>();
-
-		Game.blocks.stream().forEach((aCube) -> {
-			aCube.motionOnGameTick();
-		});
+		if(yGround >= Game.blockLength){
+			yGround = 0;
+			createBottomRow();
+			Game.selectedRow--;
+		}
+		
+		MainController.updateDestroyedLabel(Statistics.blocksClearedCount);
 
 		CanvasPainter.repaint();
 	}
