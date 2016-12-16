@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logic;
+package game.logic;
 
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import static logic.Block.yGround;
-import static logic.Game.columnCount;
-import main.MainController;
-import utilities.CanvasPainter;
+import static game.logic.Block.yGround;
+import static game.logic.Game.columnCount;
+import game.offline.GameOfflineController;
+import game.utilities.CanvasPainter;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -36,7 +36,7 @@ public abstract class TimerEvents {
 			  actionEvent -> gameTick()
 			),
 			new KeyFrame(
-			  Duration.millis(25)
+			  Duration.millis(15)
 			)
 		);
 		gameFrameTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -53,7 +53,7 @@ public abstract class TimerEvents {
 					if(seconds<=9) { secondsString = "0"+secondsString; }
 					if(minutes<=9) { minutesString = "0"+minutesString; }
 					
-					MainController.updateTimeLabel(minutesString, secondsString);
+					GameOfflineController.updateTimeLabel(minutesString, secondsString);
 					seconds++;
 
 					if(seconds==60){
@@ -125,7 +125,7 @@ public abstract class TimerEvents {
 		Game.currentPeriod++;
 		
 		if(Game.currentPeriod>=Game.PERIOD_OF_RAISE){
-			yGround+=1;
+			yGround+=0.25;
 			Game.currentPeriod = 0;
 		}
 
@@ -148,7 +148,7 @@ public abstract class TimerEvents {
 			Game.selectedRow--;
 		}
 		
-		MainController.updateDestroyedLabel(Statistics.blocksClearedCount);
+		GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount);
 
 		CanvasPainter.repaint();
 	}

@@ -1,6 +1,6 @@
-package logic;
+package game.logic;
 
-import main.MainController;
+import game.offline.GameOfflineController;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -117,7 +117,7 @@ public class Block {
 						&& !Game.blocks[myColumn][myRow-1].isFalling()
 						&& !Game.blocks[myColumn][myRow+1].isFalling() ){
 				
-					MainController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
+					GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
 					Game.blocks[myColumn][myRow-1] = null;
 					Game.blocks[myColumn][myRow] = null;
 					Game.blocks[myColumn][myRow+1] = null;
@@ -136,7 +136,7 @@ public class Block {
 						&& !Game.blocks[myColumn-1][myRow].isFalling()
 						&& !Game.blocks[myColumn+1][myRow].isFalling() ){ //these lines
 					
-					MainController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
+					GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
 					Game.blocks[myColumn-1][myRow] = null;
 					Game.blocks[myColumn][myRow] = null;
 					Game.blocks[myColumn+1][myRow] = null;
@@ -193,7 +193,7 @@ public class Block {
 			Game.blocks[prevCol + 1][myRow] = this;
 			
 		}
-		MainController.updateSwapsLabel(++Statistics.blockSwapCount);
+		GameOfflineController.updateSwapsLabel(++Statistics.blockSwapCount);
 		myColumn++;
 		
 		//yPosition = Game.blockLength;
@@ -223,7 +223,7 @@ public class Block {
 			Game.blocks[prevCol - 1][myRow] = this;
 			
 		}
-		MainController.updateSwapsLabel(++Statistics.blockSwapCount);
+		GameOfflineController.updateSwapsLabel(++Statistics.blockSwapCount);
 		myColumn--;
 		//yPosition = Game.blockLength;
 		

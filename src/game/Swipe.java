@@ -1,15 +1,18 @@
-package main;
+package game;
 
+import game.logic.Game;
+import game.utilities.SoundLoader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import logic.Game;
-import utilities.SoundLoader;
+import javafx.util.Duration;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -19,10 +22,10 @@ public class Swipe extends Application implements SoundLoader{
 	public static Stage primaryStage;
 	public static MediaPlayer mediaPlayer;
 	
-	public static final int COLUMNS = 10;
-	public static final int ROWS = 14;
-	public static final int CUBE_SIDE_LENGTH = 40;
-	
+	public static final int COLUMNS = 8;
+	public static final int ROWS = 12;
+	public static final int CUBE_SIDE_LENGTH = 50;
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -36,23 +39,26 @@ public class Swipe extends Application implements SoundLoader{
 	public void start(Stage primaryStage) throws Exception {
 		Swipe.primaryStage = primaryStage;
 		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-
 		Scene scene = new Scene(root);
 		
-		/*
-		mediaPlayer = setupMusic();
+		
+		mediaPlayer = setupMusic("intro");
+		mediaPlayer.setOnEndOfMedia(() -> {
+			mediaPlayer.seek(Duration.ZERO);
+		});
 		mediaPlayer.play();
 		MediaView mediaView = new MediaView();
         ((Pane)scene.getRoot()).getChildren().add(mediaView);
-		*/
+		
+		
 		primaryStage.setOnCloseRequest((WindowEvent event) -> {
 			Game.setRunning(false);
 			Platform.exit();
 		});
-		
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		
 		System.out.println("[Swipe]\tShowing stage.");
 	}
-	
 }

@@ -1,4 +1,4 @@
-package logic;
+package game.logic;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -20,7 +20,7 @@ public final class Game extends TimerEvents{
 	
 	// Cube properties
 	public static int blockLength;
-	public static int DROP_SPEED = 10;
+	public static int DROP_SPEED = 5;
 	
 	// Selected block
 	public static Block firstSwapBlock;
