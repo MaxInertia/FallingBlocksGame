@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
+<?import javafx.embed.swing.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.online.GameOnlineController">
+   <children>
+      <BorderPane StackPane.alignment="CENTER">
+         <left>
+            <Canvas fx:id="myGameCanvas" height="200.0" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <SplitPane dividerPositions="0.5, 0.5, 0.5, 0.5" orientation="VERTICAL">
+              <items>
+                  <AnchorPane>
+                     <children>
+                        <Label fx:id="timeLabel" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" prefHeight="46.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold Italic" size="32.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane>
+                     <children>
+                        <VBox alignment="TOP_CENTER" layoutX="52.0" maxHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label alignment="TOP_CENTER" contentDisplay="TOP" focusTraversable="false" nodeOrientation="LEFT_TO_RIGHT" text="Statistics">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="destroyedLabel" focusTraversable="false" text="Destroyed:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="swapsLabel" focusTraversable="false" layoutX="10.0" layoutY="10.0" text="Swaps:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="movesLabel" focusTraversable="false" layoutX="10.0" layoutY="27.0" text="Moves:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane>
+                     <children>
+                        <Region prefHeight="120.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <Label fx:id="infoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="-2.0" text="Waiting..." textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <HBox alignment="BOTTOM_CENTER" fillHeight="false" maxHeight="-Infinity" prefHeight="64.0" spacing="12.0">
+                           <children>
+                              <Button fx:id="readyButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="80.0" text="Ready" />
+                              <Button disable="true" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Reset" />
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+         <right>
+            <Canvas fx:id="oppGameCanvas" height="200.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</StackPane>

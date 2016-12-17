@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
+<?import javafx.embed.swing.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.offline.GameOfflineController">
+   <children>
+      <BorderPane>
+         <center>
+            <Canvas fx:id="gameCanvas" height="200.0" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            <SplitPane dividerPositions="0.5, 0.5" focusTraversable="false" orientation="VERTICAL" BorderPane.alignment="CENTER">
+              <items>
+                  <Label fx:id="timeLabel" alignment="CENTER" focusTraversable="false">
+                     <font>
+                        <Font name="System Bold Italic" size="32.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" nodeOrientation="LEFT_TO_RIGHT" text="Statistics">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="destroyedLabel" focusTraversable="false" text="Destroyed:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="swapsLabel" focusTraversable="false" layoutX="10.0" layoutY="10.0" text="Swaps:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="movesLabel" focusTraversable="false" layoutX="10.0" layoutY="27.0" text="Moves:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <HBox alignment="TOP_CENTER" fillHeight="false" spacing="13.0">
+                     <children>
+                        <Button fx:id="startButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="80.0" text="Start" />
+                        <Button disable="true" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Reset" />
+                     </children>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </HBox>
+              </items>
+            </SplitPane>
+         </right>
+      </BorderPane>
+   </children>
+</StackPane>

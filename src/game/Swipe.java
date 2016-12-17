@@ -16,6 +16,8 @@ import javafx.stage.WindowEvent;
  */
 public class Swipe extends Application implements SoundLoader{
 	
+	public static boolean printStackTraces = false;
+	
 	public static Stage primaryStage;
 	public static MediaPlayer mediaPlayer;
 	
@@ -39,8 +41,8 @@ public class Swipe extends Application implements SoundLoader{
 		Scene scene = new Scene(root);
 		
 		
-		mediaPlayer = setupMusic("intro");
-		mediaPlayer.play();
+		//mediaPlayer = setupMusic("intro");
+		//mediaPlayer.play();
 		//MediaView mediaView = new MediaView();
         //((Pane)scene.getRoot()).getChildren().add(mediaView);
 		
