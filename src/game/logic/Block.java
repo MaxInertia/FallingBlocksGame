@@ -1,37 +1,14 @@
 package game.logic;
 
-import game.offline.GameOfflineController;
+import javafx.util.Pair;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
  */
-public class Block {
+public class Block extends BasicBlock{
 	
-	public enum Type{
-		SUN(0,1),MOON(1,4),WINTER(2,1),
-		IRON(3,1),ATOMIC(4,1),BIO(5,1),
-		LASER(6,1);
-		
-		public final int id;
-		public final int range;
-		
-		Type(int typeID, int typeRange){
-			id = typeID;
-			range = typeRange;
-		}
-	}
-	
-	private Type type;
-	
-	public int myColumn;
-	public int myRow;
-	public double yPosition;
-	public static double yGround = 0;
-	private boolean falling;
-		
-	public Block(int column, int row){	
-		this.myColumn = column;
-		this.myRow = row;
+	public Block(int column, int row){
+		super(column, row);
 		
 		if(myRow==0){
 			yPosition = Game.blockLength;
@@ -40,28 +17,7 @@ public class Block {
 			yPosition = 0;
 		}
 		
-		assignInitialType();
-		
-		Game.blocks[myColumn][myRow] = this;
-	}
-	
-	private void assignInitialType(){
-		int rand = ((int)(Math.random()*63));
-		if(rand<10){ type = Type.SUN; }
-		else if(rand<20){ type = Type.MOON; }
-		else if(rand<30){ type = Type.WINTER; }
-		else if(rand<40){ type = Type.IRON; }
-		else if(rand<50){ type = Type.ATOMIC; }
-		else if(rand<60){ type = Type.BIO; }
-		else if(rand<70){ type = Type.LASER; }
-	}
-	
-	public void setType(Type t){
-		type = t;
-	}
-	
-	public Type getType(){
-		return type;
+		Game.blocks[0][myColumn][myRow] = this;
 	}
 	
 	/**
@@ -90,8 +46,8 @@ public class Block {
 	public boolean isBlocked() {
 		if(myRow == Game.rowCount){ return true; }
 		
-		if(Game.blocks[myColumn][myRow+1] != null
-		&& Game.blocks[myColumn][myRow+1].yPosition >= this.yPosition-Game.DROP_SPEED){
+		if(Game.blocks[0][myColumn][myRow+1] != null
+		&& Game.blocks[0][myColumn][myRow+1].yPosition >= this.yPosition-Game.DROP_SPEED){
 			return true;
 		}
 
@@ -107,39 +63,39 @@ public class Block {
 	public boolean performCancellations(){
 		//System.out.println(Game.myRowCount);
 		if(myRow>0 && (myRow+1)<Game.rowCount 
-				&& Game.blocks[myColumn][myRow-1]!=null
-				&& Game.blocks[myColumn][myRow+1]!=null){
+				&& Game.blocks[0][myColumn][myRow-1]!=null
+				&& Game.blocks[0][myColumn][myRow+1]!=null){
 			
-			if(type == Game.blocks[myColumn][myRow-1].type
-					&& type == Game.blocks[myColumn][myRow+1].type){
+			if(type == Game.blocks[0][myColumn][myRow-1].type
+					&& type == Game.blocks[0][myColumn][myRow+1].type){
 				
 				if( !this.isFalling()
-						&& !Game.blocks[myColumn][myRow-1].isFalling()
-						&& !Game.blocks[myColumn][myRow+1].isFalling() ){
+						&& !Game.blocks[0][myColumn][myRow-1].isFalling()
+						&& !Game.blocks[0][myColumn][myRow+1].isFalling() ){
 				
-					GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
-					Game.blocks[myColumn][myRow-1] = null;
-					Game.blocks[myColumn][myRow] = null;
-					Game.blocks[myColumn][myRow+1] = null;
+					//GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
+					Game.cancellationIndexes.add(new Pair<>(myColumn,myRow-1));
+					Game.cancellationIndexes.add(new Pair<>(myColumn,myRow));
+					Game.cancellationIndexes.add(new Pair<>(myColumn,myRow+1));
 					return true;
 				}
 			}
 		}
 		if(myColumn>0 && (myColumn+1)<Game.columnCount 
-				&& Game.blocks[myColumn-1][myRow]!=null
-				&& Game.blocks[myColumn+1][myRow]!=null){
+				&& Game.blocks[0][myColumn-1][myRow]!=null
+				&& Game.blocks[0][myColumn+1][myRow]!=null){
 			
-			if(type == Game.blocks[myColumn-1][myRow].type
-					&& type == Game.blocks[myColumn+1][myRow].type){
+			if(type == Game.blocks[0][myColumn-1][myRow].type
+					&& type == Game.blocks[0][myColumn+1][myRow].type){
 				
 				if( !this.isFalling()
-						&& !Game.blocks[myColumn-1][myRow].isFalling()
-						&& !Game.blocks[myColumn+1][myRow].isFalling() ){ //these lines
+						&& !Game.blocks[0][myColumn-1][myRow].isFalling()
+						&& !Game.blocks[0][myColumn+1][myRow].isFalling() ){ //these lines
 					
-					GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
-					Game.blocks[myColumn-1][myRow] = null;
-					Game.blocks[myColumn][myRow] = null;
-					Game.blocks[myColumn+1][myRow] = null;
+					//GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount+=3);
+					Game.cancellationIndexes.add(new Pair<>(myColumn-1,myRow));
+					Game.cancellationIndexes.add(new Pair<>(myColumn,myRow));
+					Game.cancellationIndexes.add(new Pair<>(myColumn+1,myRow));
 					return true;
 				}
 			}
@@ -152,8 +108,8 @@ public class Block {
 	 * (Can throw IndexOutOfBoundsException)
 	 */
 	public void moveDownOneCell(){
-		Game.blocks[myColumn][myRow] = null;
-		Game.blocks[myColumn][++myRow] = this;
+		Game.blocks[0][myColumn][myRow] = null;
+		Game.blocks[0][myColumn][++myRow] = this;
 	}
 	
 	/**
@@ -161,12 +117,12 @@ public class Block {
 	 * (Can throw IndexOutOfBoundsException)
 	 */
 	public void moveUpOneCell(){
-		if(Game.blocks[myColumn][myRow] != null){ 
+		if(Game.blocks[0][myColumn][myRow] != null){ 
 			//System.out.println("moveUpOneCell() Tried moving block into another block");
 		}
 		if(myRow==0){ Game.setRunning(false); }
-		Game.blocks[myColumn][myRow] = null;
-		Game.blocks[myColumn][--myRow] = this;
+		Game.blocks[0][myColumn][myRow] = null;
+		Game.blocks[0][myColumn][--myRow] = this;
 		
 	}
 	
@@ -179,21 +135,21 @@ public class Block {
 		if(myColumn == Game.columnCount - 1 ) return false;
 
 		int prevCol = myColumn;
-		Block temp = Game.blocks[prevCol + 1][myRow];
+		Block temp = Game.blocks[0][prevCol + 1][myRow];
 				
 		if(temp != null){
 			if(!temp.isBlocked()) return false;
 			
-			Game.blocks[prevCol + 1][myRow] = Game.blocks[prevCol][myRow];
-			Game.blocks[prevCol][myRow] = temp;
-			Game.blocks[prevCol][myRow].myColumn--;
+			Game.blocks[0][prevCol + 1][myRow] = Game.blocks[0][prevCol][myRow];
+			Game.blocks[0][prevCol][myRow] = temp;
+			Game.blocks[0][prevCol][myRow].myColumn--;
 			
 		}else{
-			Game.blocks[prevCol][myRow] = null;
-			Game.blocks[prevCol + 1][myRow] = this;
+			Game.blocks[0][prevCol][myRow] = null;
+			Game.blocks[0][prevCol + 1][myRow] = this;
 			
 		}
-		GameOfflineController.updateSwapsLabel(++Statistics.blockSwapCount);
+		//GameOfflineController.updateSwapsLabel(++Statistics.blockSwapCount);
 		myColumn++;
 		
 		//yPosition = Game.blockLength;
@@ -209,21 +165,21 @@ public class Block {
 		if(myColumn == 0 ) return false;
 		
 		int prevCol = myColumn;
-		Block temp = Game.blocks[prevCol - 1][myRow];
+		Block temp = Game.blocks[0][prevCol - 1][myRow];
 		
 		if(temp != null){
 			if (!temp.isBlocked()) return false;
 			
-			Game.blocks[prevCol - 1][myRow] = Game.blocks[prevCol][myRow];
-			Game.blocks[prevCol][myRow] = temp;
-			Game.blocks[prevCol][myRow].myColumn++;
+			Game.blocks[0][prevCol - 1][myRow] = Game.blocks[0][prevCol][myRow];
+			Game.blocks[0][prevCol][myRow] = temp;
+			Game.blocks[0][prevCol][myRow].myColumn++;
 		
 		}else{
-			Game.blocks[prevCol][myRow] = null;
-			Game.blocks[prevCol - 1][myRow] = this;
+			Game.blocks[0][prevCol][myRow] = null;
+			Game.blocks[0][prevCol - 1][myRow] = this;
 			
 		}
-		GameOfflineController.updateSwapsLabel(++Statistics.blockSwapCount);
+		//GameOfflineController.updateSwapsLabel(++Statistics.blockSwapCount);
 		myColumn--;
 		//yPosition = Game.blockLength;
 		
@@ -248,8 +204,8 @@ public class Block {
 		}
 		
 		// The block is falling, there is aother block within one blockLength below it
-		if(Game.blocks[myColumn][myRow+1]!=null){
-			if(Game.blocks[myColumn][myRow+1].yPosition <= yPosition-Game.DROP_SPEED){
+		if(Game.blocks[0][myColumn][myRow+1]!=null){
+			if(Game.blocks[0][myColumn][myRow+1].yPosition <= yPosition-Game.DROP_SPEED){
 				falling = true;
 				yPosition = yPosition - Game.DROP_SPEED;
 			}else{
@@ -268,8 +224,6 @@ public class Block {
 				yPosition += Game.blockLength;
 			}
 		}
-		
-		
 		
 		//if(yPosition == -Game.blockLength){ yPosition = 0; }
 	}

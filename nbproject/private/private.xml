@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Personal">
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/logic/TimerEvents.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/main/Swipe.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/logic/Game.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/main/MainController.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/logic/Statistics.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/logic/Block.java</file>
-            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/utilities/KeyPressListener.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/Swipe.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/offline/GameOfflineController.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/utilities/KeyPressListener.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/MainController.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/networking/GenUpdateParser.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/logic/TimerEvents.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/logic/Statistics.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/logic/Game.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/online/GameOnlineController.java</file>
+            <file>file:/C:/Users/Doria/Desktop/Projects/Swipe/swipe/src/game/utilities/CanvasPainter.java</file>
         </group>
     </open-files>
 </project-private>

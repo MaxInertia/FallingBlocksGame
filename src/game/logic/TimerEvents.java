@@ -6,13 +6,19 @@
 package game.logic;
 
 
+import static game.logic.BasicBlock.yGround;
+import static game.logic.Game.cancellationIndexes;
+import static game.logic.Game.columnCount;
+import game.offline.GameOfflineController;
+import game.online.GameOnlineController;
+import game.utilities.CanvasPainter;
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import static game.logic.Block.yGround;
-import static game.logic.Game.columnCount;
-import game.offline.GameOfflineController;
-import game.utilities.CanvasPainter;
+import javafx.util.Pair;
+import networking.ClientNet;
+import networking.GenUpdate;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -22,6 +28,9 @@ public abstract class TimerEvents {
 	private static Timeline gameFrameTimeline;
 	
 	private static Timeline clockTimeline;
+	
+	private static int tick = 0;
+	
 	private static int seconds = 0;
 	private static int minutes = 0;
 	
@@ -49,21 +58,36 @@ public abstract class TimerEvents {
 				actionEvent -> {
 					String secondsString = ""+seconds;
 					String minutesString = ""+minutes;
-			
 					if(seconds<=9) { secondsString = "0"+secondsString; }
 					if(minutes<=9) { minutesString = "0"+minutesString; }
 					
-					GameOfflineController.updateTimeLabel(minutesString, secondsString);
-					seconds++;
-
-					if(seconds==60){
+					switch(Game.onlineORoffline){
+						case "ONLINE":
+							GenUpdate gu = new GenUpdate(Game.blocks);
+							ClientNet.sendObject(gu);
+						
+							if(tick%10==0){ GameOnlineController.updateTimeLabel(minutesString, secondsString); }
+							break;
+						case "OFFLINE":
+							GameOfflineController.updateTimeLabel(minutesString, secondsString);
+							break;
+					}
+					
+					if(tick%10==0){
+						seconds++;
+						
+						if(seconds==60){
 						minutes++;
 						seconds = 0;
+						}
 					}
+					
+					tick++;
+					
 				}
 			),
 			new KeyFrame(
-			  Duration.seconds(1)
+			  Duration.millis(100)
 			)
 		);
 		clockTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -120,27 +144,56 @@ public abstract class TimerEvents {
 	
 
 	private static void gameTick() {
+		
 		//System.out.println("[Game]\ttimer clicked");
 		Game.createFallingBlocks();
 		Game.currentPeriod++;
 		
 		if(Game.currentPeriod>=Game.PERIOD_OF_RAISE){
-			yGround+=0.25;
+			yGround+=0.50;
 			Game.currentPeriod = 0;
 		}
 
 		// Goes to r<Game.rowCount+1 because the lower layer must move up too
+		int players;
+		if(Game.onlineORoffline.equals("ONLINE")){ players = 1; }
+		else{ players = 2; }
+		
+		// For each player...
+		//for(int p=0; p<players; p++){
+		
+		// Calculate new positions
+		// For each column..
 		for(int c=0; c<Game.columnCount; c++){
+			// For each row.
 			for(int r=0; r<Game.rowCount+1; r++){
-				Block b = Game.blocks[c][r];
+				Block b = Game.blocks[0][c][r];
 				if(b!=null){
 					b.motionOnGameTick();
-					if(b.myRow != Game.rowCount){
-						b.performCancellations();
-					}
 				}
 			}
 		}
+		
+		// Calculate Cancellations
+		// For each column
+		for(int c=0; c<Game.columnCount; c++){
+			// For each row.
+			for(int r=0; r<Game.rowCount+1; r++){
+				Block b = Game.blocks[0][c][r];
+				if(b!=null && b.myRow != Game.rowCount){
+					b.performCancellations();
+				}
+			}
+		}
+		
+		int deletedBlocks = 0;
+		for(Pair<Integer,Integer> p: cancellationIndexes){
+			if(Game.blocks[0][p.getKey()][p.getValue()] != null) { deletedBlocks++; }
+			Game.blocks[0][p.getKey()][p.getValue()] = null;
+		}
+		Statistics.incrementClearedCount(deletedBlocks);
+		Game.cancellationIndexes = null;
+		Game.cancellationIndexes = new ArrayList<>();
 		
 		if(yGround >= Game.blockLength){
 			yGround = 0;
@@ -148,8 +201,11 @@ public abstract class TimerEvents {
 			Game.selectedRow--;
 		}
 		
-		GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount);
-
+		if(Game.onlineORoffline.equals("ONLINE")){
+			GameOnlineController.updateDestroyedLabel(Statistics.blocksClearedCount);
+		}else{
+			GameOfflineController.updateDestroyedLabel(Statistics.blocksClearedCount);
+		}
 		CanvasPainter.repaint();
 	}
 }

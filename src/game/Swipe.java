@@ -7,12 +7,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 /**
  * @author Dorian Thiessen | dorian.thiessen@usask.ca | maxinertia.ca
@@ -23,8 +20,8 @@ public class Swipe extends Application implements SoundLoader{
 	public static MediaPlayer mediaPlayer;
 	
 	public static final int COLUMNS = 8;
-	public static final int ROWS = 12;
-	public static final int CUBE_SIDE_LENGTH = 50;
+	public static final int ROWS = 10;
+	public static final int CUBE_SIDE_LENGTH = 60;
 
 	/**
 	 * @param args the command line arguments
@@ -43,12 +40,9 @@ public class Swipe extends Application implements SoundLoader{
 		
 		
 		mediaPlayer = setupMusic("intro");
-		mediaPlayer.setOnEndOfMedia(() -> {
-			mediaPlayer.seek(Duration.ZERO);
-		});
 		mediaPlayer.play();
-		MediaView mediaView = new MediaView();
-        ((Pane)scene.getRoot()).getChildren().add(mediaView);
+		//MediaView mediaView = new MediaView();
+        //((Pane)scene.getRoot()).getChildren().add(mediaView);
 		
 		
 		primaryStage.setOnCloseRequest((WindowEvent event) -> {
